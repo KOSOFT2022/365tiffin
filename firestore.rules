@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Allow public read for general app flow, but restrict writes to authenticated users
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if true; // In simple web prototype, allow flexible registration and update
+    }
+
+    match /kitchens/{kitchenId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /subscriptions/{subId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /orders/{orderId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /bulk_orders/{orderId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Food Tiffin Services",
+  "description": "A comprehensive multi-role tiffin subscription platform with interfaces for Super Admin, Tiffin Owner, Kitchen Cooks, Delivery Boys, and Customers.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

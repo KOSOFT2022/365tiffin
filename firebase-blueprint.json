@@ -1,0 +1,107 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with role details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique user ID" },
+        "name": { "type": "string", "description": "Full name of the user" },
+        "email": { "type": "string", "description": "Primary email of the user" },
+        "role": { "type": "string", "enum": ["super_admin", "tiffin_owner", "kitchen_cook", "delivery_boy", "customer"] },
+        "phone": { "type": "string", "description": "Phone number" },
+        "avatarUrl": { "type": "string", "description": "Profile picture URL" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "Kitchen": {
+      "title": "Tiffin Kitchen",
+      "description": "Registered kitchen providing tiffin packages",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "cuisine": { "type": "string" },
+        "description": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviewsCount": { "type": "number" },
+        "avatarUrl": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "packages": { "type": "array" },
+        "weeklyMenu": { "type": "array" }
+      },
+      "required": ["id", "name", "ownerId"]
+    },
+    "Subscription": {
+      "title": "User Subscription",
+      "description": "Active tiffin subscription details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerAddress": { "type": "string" },
+        "kitchenId": { "type": "string" },
+        "kitchenName": { "type": "string" },
+        "packageId": { "type": "string" },
+        "packageName": { "type": "string" },
+        "packageType": { "type": "string" },
+        "price": { "type": "number" },
+        "billingCycle": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "status": { "type": "string" },
+        "deliveryTime": { "type": "string" },
+        "guestPlates": { "type": "array" },
+        "addOnsOrdered": { "type": "array" }
+      },
+      "required": ["id", "customerId", "kitchenId", "packageId"]
+    },
+    "Order": {
+      "title": "Daily Order Box",
+      "description": "Individual daily order derived from active subscription",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subscriptionId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerAddress": { "type": "string" },
+        "kitchenId": { "type": "string" },
+        "kitchenName": { "type": "string" },
+        "date": { "type": "string" },
+        "mealType": { "type": "string" },
+        "status": { "type": "string" },
+        "orderType": { "type": "string" },
+        "details": { "type": "object" },
+        "deliveryBoyId": { "type": "string" },
+        "deliveryBoyName": { "type": "string" },
+        "geoTags": { "type": "object" },
+        "updatedAt": { "type": "string" },
+        "rating": { "type": "number" },
+        "feedbackText": { "type": "string" }
+      },
+      "required": ["id", "subscriptionId", "customerId", "kitchenId", "date", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user registration and role details"
+    },
+    "/kitchens/{kitchenId}": {
+      "schema": "Kitchen",
+      "description": "Stores registered kitchens, custom subscription packages, and daily menu cycles"
+    },
+    "/subscriptions/{subId}": {
+      "schema": "Subscription",
+      "description": "Tracks customer package subscriptions, active cycles, scheduled guest plates, and add-on records"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Daily meal delivery boxes dispatched dynamically, tracked by Rider, Cook, Owner, and Customer in real-time"
+    }
+  }
+}
